@@ -1,0 +1,151 @@
+Step: build-step-credential-initializer:
+
+{"level":"warn","ts":1551729450.924071,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1551729450.9247444,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+Step: build-step-git-source-0:
+
+{"level":"warn","ts":1551729451.6575222,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1551729452.2208998,"logger":"fallback-logger","caller":"git-init/main.go:92","msg":"Successfully cloned \"https://github.com/jenkinsxworkshop/gomar4serverless.git\" @ \"dd636808bd0670252f0b6ee9be34b73ce849f2a5\" in path \"/workspace\""}
+Step: build-step-jenkins:
+
+Picked up _JAVA_OPTIONS: -Xmx400m
+Started
+Running in Durability level: PERFORMANCE_OPTIMIZED
+  20.258 [id=34]	WARNING	i.f.k.c.i.VersionUsageUtils#alert: The client is using resource type 'customresourcedefinitions' with unstable version 'v1beta1'
+[Pipeline] node
+Running on Jenkins in /tmp/jenkinsTests.tmp/jenkins1126450185734293735test/workspace/job
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withCredentials
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (CI Build and push snapshot)
+Stage "CI Build and push snapshot" skipped due to when conditional
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Release)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/jenkinsxworkshop/gomar4serverless
+[Pipeline] {
+[Pipeline] git
+Cloning the remote Git repository
+Cloning repository https://github.com/jenkinsxworkshop/gomar4serverless.git
+ > git init /home/jenkins/go/src/github.com/jenkinsxworkshop/gomar4serverless # timeout=10
+Fetching upstream changes from https://github.com/jenkinsxworkshop/gomar4serverless.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/jenkinsxworkshop/gomar4serverless.git +refs/heads/*:refs/remotes/origin/*
+ > git config remote.origin.url https://github.com/jenkinsxworkshop/gomar4serverless.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/jenkinsxworkshop/gomar4serverless.git # timeout=10
+Fetching upstream changes from https://github.com/jenkinsxworkshop/gomar4serverless.git
+ > git fetch --tags --progress https://github.com/jenkinsxworkshop/gomar4serverless.git +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision dd636808bd0670252f0b6ee9be34b73ce849f2a5 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f dd636808bd0670252f0b6ee9be34b73ce849f2a5
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b master dd636808bd0670252f0b6ee9be34b73ce849f2a5
+Commit message: "Merge pull request #1 from jenkinsxworkshop/workshop"
+First time build. Skipping changelog.
+[Pipeline] sh
++ jx-release-version
++ echo 0.0.2
+[Pipeline] sh
++ cat VERSION
++ jx step tag --version 0.0.2
+Tag v0.0.2 created and pushed to remote origin
+[Pipeline] sh
++ make build
+CGO_ENABLED=0 GO15VENDOREXPERIMENT=1 go build -ldflags '' -o bin/gomar4serverless main.go
+[Pipeline] sh
++ cat VERSION
++ export VERSION=0.0.2
++ skaffold build -f skaffold.yaml
+time="2019-03-04T19:58:25Z" level=warning msg="config version (skaffold/v1beta2) out of date: upgrading to latest (skaffold/v1beta3)"
+Starting build...
+Building [changeme]...
+Sending build context to Docker daemon  525.8kBSending build context to Docker daemon  5.539MBSending build context to Docker daemon  6.502MB
+Step 1/4 : FROM scratch
+ ---> 
+Step 2/4 : EXPOSE 8080
+ ---> Using cache
+ ---> 852b90cdf2c0
+Step 3/4 : ENTRYPOINT /gomar4serverless
+ ---> Using cache
+ ---> 09e3f9663a94
+Step 4/4 : COPY ./bin/ /
+ ---> Using cache
+ ---> a093bd6e5ec1
+Successfully built a093bd6e5ec1
+The push refers to a repository [10.11.255.125:5000/jenkinsxworkshop/gomar4serverless]
+44e72b98beee: Preparing
+44e72b98beee: Layer already exists
+0.0.2: digest: sha256:7e47fe578f5a8f69b467631255dae03a599e957ce4c8be45a836c7caeb9091f0 size: 528
+Build complete in 310.748164ms
+Starting test...
+Test complete in 5.551µs
+changeme -> 10.11.255.125:5000/jenkinsxworkshop/gomar4serverless:0.0.2
+[Pipeline] sh
++ cat VERSION
++ jx step post build --image 10.11.255.125:5000/jenkinsxworkshop/gomar4serverless:0.0.2
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Promote to Environments)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/jenkinsxworkshop/gomar4serverless/charts/gomar4serverless
+[Pipeline] {
+[Pipeline] sh
++ cat ../../VERSION
++ jx step changelog --version v0.0.2
+Using batch mode as inside a pipeline
+Generating change log from git ref dd636808bd0670252f0b6ee9be34b73ce849f2a5 => 2545bed6022f6cc80b7f4c1b333d375bd8cf5675
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Finding issues in commit messages using git format
+No release found for jenkinsxworkshop/gomar4serverless and tag v0.0.2 so creating a new release
+Updated the release information at https://github.com/jenkinsxworkshop/gomar4serverless/releases/tag/v0.0.2
+generated: /home/jenkins/go/src/github.com/jenkinsxworkshop/gomar4serverless/charts/gomar4serverless/templates/release.yaml
+Created Release gomar4serverless-0-0-2 resource in namespace jx
+Updating PipelineActivity jenkinsxworkshop-gomar4serverless-master-2 with version 0.0.2
+Updated PipelineActivities jenkinsxworkshop-gomar4serverless-master-2 with release notes URL: https://github.com/jenkinsxworkshop/gomar4serverless/releases/tag/v0.0.2
+[Pipeline] sh
++ jx step helm release
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Adding missing Helm repo: jenkins-x http://chartmuseum.jenkins-x.io
+Successfully added Helm repository jenkins-x.
+Adding missing Helm repo: releases http://jenkins-x-chartmuseum:8080
+Successfully added Helm repository releases.
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Uploading chart file gomar4serverless-0.0.2.tgz to http://jenkins-x-chartmuseum:8080/api/charts
+Received 201 response: {"saved":true}
+[Pipeline] sh
++ cat ../../VERSION
++ jx promote -b --all-auto --timeout 1h --version 0.0.2
+prow based install so skip waiting for the merge of Pull Requests to go green as currently there is an issue with gettingstatuses from the PR, see https://github.com/jenkins-x/jx/issues/2410
+Promoting app gomar4serverless version 0.0.2 to namespace jx-staging
+Created Pull Request: https://github.com/jenkinsxworkshop/environment-mar4serverless-staging/pull/2
+
+Pull Request https://github.com/jenkinsxworkshop/environment-mar4serverless-staging/pull/2 is merged at sha dde46036ddf8d60c3f6aa286c4c815afb6cb3af6
+Pull Request merged but we are not waiting for the update pipeline to complete!
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
